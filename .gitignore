@@ -1,0 +1,8 @@
+*.DS_Store
+.DS_Store
+RNU/rnu_app/.DS_Store
+RNU/rnu_bd/.DS_Store
+RNU/rnu_api/.DS_Store
+SCLINICO/sclinico_app/.DS_Store
+SCLINICO/sclinico_bd/.DS_Store
+SCLINICO/sclinico_api/.DS_Store
