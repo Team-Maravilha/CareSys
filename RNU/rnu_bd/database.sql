@@ -26,6 +26,24 @@ CREATE TABLE utente (
   hashed_id             varchar(255) NULL, 
   data_criacao          timestamp NOT NULL, 
   PRIMARY KEY (id_utente));
+
+CREATE TABLE tipos_documento (
+  id_tipo_documento SERIAL NOT NULL, 
+  nome              varchar(255) NOT NULL, 
+  hashed_id         varchar(255) NULL,
+  PRIMARY KEY (id_tipo_documento));
+
+# CHANGE TIPO DE DOCUMENTO TO ID TIPO DE DOCUMENTO
+ALTER TABLE utente DROP COLUMN tipo_documento;
+ALTER TABLE utente ADD COLUMN id_tipo_documento int NOT NULL;
+ALTER TABLE utente ADD CONSTRAINT FKTipoDocumento FOREIGN KEY (id_tipo_documento) REFERENCES tipos_documento (id_tipo_documento);
+#ALLOW NULL
+ALTER TABLE utente ALTER COLUMN hora_nascimento DROP NOT NULL;
+ALTER TABLE utente ALTER COLUMN num_utente DROP NOT NULL;
+ALTER TABLE utente ALTER COLUMN data_criacao SET DEFAULT NOW();
+ALTER TABLE utente ALTER COLUMN num_utente DROP NOT NULL;
+ALTER TABLE utente ALTER COLUMN estado SET DEFAULT ;
+
 CREATE TABLE morada (
   id_morada           SERIAL NOT NULL, 
   id_utente           int NOT NULL, 
