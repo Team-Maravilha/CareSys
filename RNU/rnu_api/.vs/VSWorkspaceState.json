@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\schemas",
+    "\\src",
+    "\\src\\patients",
+    "\\src\\requests"
+  ],
+  "SelectedNode": "\\src\\requests\\controller.js",
+  "PreviewInSolutionExplorer": false
+}
