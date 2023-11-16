@@ -1,4 +1,4 @@
-<?php require($_SERVER["DOCUMENT_ROOT"] . "/api/api.php") ?>
+<?php require_once($_SERVER["DOCUMENT_ROOT"] . "/api/api.php") ?>
 <?php
 $api = new Api();
 $num_count = $api->fetch("requests/count", null, null);

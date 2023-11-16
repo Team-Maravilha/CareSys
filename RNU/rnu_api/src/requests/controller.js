@@ -228,7 +228,7 @@ const Get_Patients_Requests_Table = (req, res) => {
             res.status(400).json({ error: error.message });
             return;
         }
-        res.status(200).json(results.rows);
+        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
     });
 }
 
@@ -255,9 +255,59 @@ const Get_Patients_Requests_Counter = (req, res) => {
     });
 }
 
+/**
+ * @swagger
+ * /api/requests/accept:
+ *  post:
+ *      tags: [Pedidos]
+ *      summary: Aceitar Pedido de Utente
+ *      description: Aceita o Pedido de Utente e devolve a resposta de Sucesso ou o Erro em questão
+ *      responses:
+ *          '201':
+ *              description: O seu pedido foi aceite com Sucesso!
+ *          '200':
+ *              description: Erro + Informação do Sistema
+ */
+const Accept_Patient_Request = (req, res) => {
+    const { hashed_id } = req.body;
+    pool.query("SELECT * FROM aceitar_utente($1)", [hashed_id], (error, results) => {
+        if (error) {
+            res.status(200).json({ "status": false, "message": error.message });
+            return;
+        }
+        res.status(201).json({ "status": true, "message": "O pedido do Utente foi aceite!" });
+    });
+}
+
+/**
+ * @swagger
+ * /api/requests/reject:
+ *  post:
+ *      tags: [Pedidos]
+ *      summary: Rejeitar Pedido de Utente
+ *      description: Rejeita o Pedido de Utente e devolve a resposta de Sucesso ou o Erro em questão
+ *      responses:
+ *          '201':
+ *              description: O seu pedido foi rejeitado com Sucesso!
+ *          '200':
+ *              description: Erro + Informação do Sistema
+ */
+const Reject_Patient_Request = (req, res) => {
+    const { hashed_id } = req.body;
+    pool.query("SELECT * FROM rejeitar_utente($1)", [hashed_id], (error, results) => {
+        if (error) {
+            res.status(200).json({ "status": false, "message": error.message });
+            return;
+        }
+        res.status(201).json({ "status": true, "message": "O pedido do Utente foi rejeitado!" });
+    });
+}
+
 module.exports = {
     Get_Requests,
     Create_Request,
     Get_Patients_Requests_Table,
-    Get_Patients_Requests_Counter
+    Get_Patients_Requests_Counter,
+    Accept_Patient_Request,
+    Reject_Patient_Request
 };

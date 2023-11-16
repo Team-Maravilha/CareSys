@@ -43,7 +43,7 @@ $page_name = "CareSys | RNU - Todos os Utentes";
 														<th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="3">Nº Seg. Social</th>
 														<th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="4">Nº Ide. Fiscal</th>
 														<th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="5">País</th>
-														<th class="ps-4 fs-6 min-w-100px rounded-start" data-priority="6">Data Pedido</th>
+														<th class="ps-4 fs-6 min-w-100px rounded-start" data-priority="6">Data Aceitação</th>
 														<th class="pe-4 fs-6 min-w-50px text-sm-end rounded-end" data-priority="7">Ações</th>
 													</tr>
 												</thead>
@@ -104,7 +104,7 @@ $page_name = "CareSys | RNU - Todos os Utentes";
 							data: "pais"
 						},
 						{
-							data: "data_pedido"
+							data: "data_aceitacao"
 						},
 						{
 							data: null

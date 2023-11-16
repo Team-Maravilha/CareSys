@@ -168,18 +168,18 @@ $page_name = "CareSys | RNU - Novos Pedidos";
 							targets: 4,
 							orderable: true,
 							render: (data, type, row) => {
-								if (row.pais === "Portugal") {
+								if (row.pais == "Portugal") {
 									return `
                             <div class="d-inline-flex align-items-center">                                
                                 <div class="d-flex justify-content-center flex-column">
-                                    <span class="badge badge-success px-2 py-2">${row.type}</span>
+                                    <span class="badge badge-success px-2 py-2">${row.pais}</span>
                                 </div>
                             </div>
                         `
-								} else if (row.type === "Outro") {
+								} else if (row.type == "Outro") {
 									return `<div class="d-inline-flex align-items-center">                                
                                 <div class="d-flex justify-content-center flex-column">
-                                    <span class="badge badge-warning px-2 py-2">${row.type}</span>
+                                    <span class="badge badge-warning px-2 py-2">${row.pais}</span>
                                 </div>
                             </div>
                         `
@@ -190,15 +190,15 @@ $page_name = "CareSys | RNU - Novos Pedidos";
 							targets: 5,
 							orderable: true,
 							render: (data, type, row) => {
-								var date = new Date(row.data_criacao);
+								var date = new Date(row.data_pedido);
 								var day = date.getDate();
 								var month = date.getMonth() + 1;
 								var year = date.getFullYear();
-								var formattedDate = (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month) + "/" + year + " " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
+								var formattedDate = (day < 10 ? "0" + day : day) + "/" + (month < 10 ? "0" + month : month) + "/" + year + " - " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes() + "h");
 								return `
                             <div class="d-inline-flex align-items-center">                                
                                 <div class="d-flex justify-content-center flex-column">
-                                    <span class="text-dark fw-bold text-hover-primary mb-1 fs-6 lh-sm">${row.formattedDate}</span>
+                                    <span class="text-dark fw-bold text-hover-primary mb-1 fs-6 lh-sm">${formattedDate}</span>
                                 </div>
                             </div>
                         `
@@ -211,7 +211,7 @@ $page_name = "CareSys | RNU - Novos Pedidos";
 							render: (data, type, row) => {
 								return `
                             <div>
-                                <a href="view?id=${row.hashed_id}" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px me-1"><i class="ki-outline ki-information-2 fs-2"></i></a>
+                                <a href="ficha_pedido?id=${row.hashed_id}" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px me-1"><i class="ki-outline ki-information-2 fs-2"></i></a>
                             </div>
                         `
 							},
