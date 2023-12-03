@@ -52,7 +52,7 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                                     <div class="d-flex flex-column">
                                                         <div class="d-flex align-items-center mb-2">
-                                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?php echo $patient_info_data["nome"] ?></a>
+                                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?php echo $patient_info_data["nome"] ?></a><a class="text-gray-900 text-hover-primary fs-3 ms-2">Nº Utente:<?php echo $patient_info_data["num_utente"] ?></a>
                                                         </div>
 
                                                         <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
@@ -106,6 +106,10 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_2") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_2">Contactos de Emergência</a>
                                             </li>
 
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_3") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_3">Cônjuges</a>
+                                            </li>
+
                                         </ul>
 
                                     </div>
@@ -115,6 +119,7 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                 <?php
                                 if ($get_tab === "patient_tab_1") require_once("components/info.php");
                                 else if ($get_tab === "patient_tab_2") require_once("components/emergency_contacts.php");
+                                else if ($get_tab === "patient_tab_3") require_once("components/marriages.php");
                                 ?>
 
 
