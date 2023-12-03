@@ -1,0 +1,147 @@
+components:
+  schemas:
+    Utente:
+      type: object
+      required:
+        - nome
+        - genero
+        - data_nascimento
+        - id_tipo_documento
+        - num_cc
+        - cod_validacao_cc
+        - data_validade_cc
+        - num_ident_seg_social
+        - num_ident_fiscal
+        - num_utente_pai
+        - num_utente_mae
+        - estado_civil
+        - situacao_profissional
+        - profissao
+        - hab_escolares
+        - num_telemovel
+        - num_telefone
+        - email
+        - pais
+        - distrito
+        - concelho
+        - freguesia
+        - morada
+        - cod_postal
+        - numero_porta
+        - andar
+        - taxa_moderadora
+        - seguro_saude
+      properties:
+        nome:
+          type: string
+          description: Nome do Utente
+        genero:
+          type: string
+          description: Género do Utente
+        data_nascimento:
+          type: string
+          description: Data de Nascimento do Utente
+        id_tipo_documento:
+          type: integer
+          description: ID do Tipo de Documento do Utente
+        num_cc:
+          type: integer
+          description: Número do Cartão de Cidadão do Utente
+        cod_validacao_cc:
+          type: integer
+          description: Código de Validação do Cartão de Cidadão do Utente
+        data_validade_cc:
+          type: string
+          description: Data de Validade do Cartão de Cidadão do Utente
+        num_ident_seg_social:
+          type: integer
+          description: Número de Identificação da Segurança Social do Utente
+        num_ident_fiscal:
+          type: integer
+          description: Número de Identificação Fiscal do Utente
+        num_utente_pai:
+          type: integer
+          description: Número de Utente do Pai do Utente
+        num_utente_mae:
+          type: integer
+          description: Número de Utente da Mãe do Utente
+        estado_civil:
+          type: string
+          description: Estado Civil do Utente
+        situacao_profissional:
+          type: string
+          description: Situação Profissional do Utente
+        profissao:
+          type: string
+          description: Profissão do Utente
+        hab_escolares:
+          type: string
+          description: Habilitações Escolares do Utente
+        num_telemovel:
+          type: integer
+          description: Número de Telemóvel do Utente
+        num_telefone:
+          type: integer
+          description: Número de Telefone do Utente
+        email:
+          type: string
+          description: Email do Utente
+        pais:
+          type: string
+          description: País do Utente
+        distrito:
+          type: string
+          description: Distrito do Utente
+        concelho:
+          type: string
+          description: Concelho do Utente
+        freguesia:
+          type: string
+          description: Freguesia do Utente
+        morada:
+          type: string
+          description: Morada do Utente
+        cod_postal:
+          type: string
+          description: Código Postal do Utente
+        numero_porta:
+          type: integer
+          description: Número da Porta do Utente
+        andar:
+          type: integer
+          description: Andar do Utente
+        taxa_moderadora:
+          type: integer
+          description: Taxa Moderadora do Utente
+        seguro_saude:
+          type: string
+          description: Seguro de Saúde do Utente
+      example:
+        nome: João Correia
+        genero: Masculino
+        data_nascimento: 1999-12-12
+        id_tipo_documento: 1
+        num_cc: 12345678
+        cod_validacao_cc: 123
+        data_validade_cc: 2025-12-12
+        num_ident_seg_social: 123456789
+        num_ident_fiscal: 123456789
+        num_utente_pai: 123456789
+        num_utente_mae: 123456789
+        estado_civil: Solteiro
+        situacao_profissional: Estudante
+        profissao: Estudante
+        hab_escolares: Licenciatura
+        num_telemovel: 123456789
+        num_telefone: 123456789
+        email: ''
+        pais: Portugal
+        distrito: Porto
+        concelho: Porto
+        freguesia: Paranhos
+        morada: Rua do ISEP
+        cod_postal: 1234-123
+        numero_porta: 123
+        andar: 1
+        taxa_moderadora: 5
+        seguro_saude: Multicare
