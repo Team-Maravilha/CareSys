@@ -27,7 +27,7 @@ const Get_Patients_Table = (req, res) => {
             res.status(400).json({ error: error.message });
             return;
         }
-        res.status(200).json(results.rows);
+        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
     });
 }
 
