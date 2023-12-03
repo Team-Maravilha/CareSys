@@ -7,6 +7,10 @@ router.get('/table', controller.Get_Patients_Table)
 
 router.get('/patient/info/:hashed_id', controller.Get_Patient_Info)
 
+router.post('/patient/marry', controller.Marry_Patient)
+
+router.post('/patient/divorce', controller.Divorce_Patient)
+
 router.post('/patient/emergency_contacts/add', controller.Add_Patient_Emergency_Contact)
 
 router.get('/patient/emergency_contacts/:hashed_id', controller.Get_Patient_Emergency_Contacts)
