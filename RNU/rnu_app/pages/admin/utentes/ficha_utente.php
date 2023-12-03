@@ -64,7 +64,7 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                                                 <i class="ki-outline ki-information-2 fs-4 me-1"></i>
                                                                 <?php echo (new DateTime($patient_info_data["data_criacao"]))->format("d/m/Y - H:i") . "h"; ?>
                                                         </div>
-                                                        <span class="badge badge-info me-2">Em Análise</span>
+                                                        <span class="badge badge-success me-2">Utente</span>
                                                         <?php if ($patient_info_data["genero"] === 1) { ?>
                                                             <span class="badge badge-warning me-2">Masculino</span>
                                                         <?php } else if ($patient_info_data["genero"] === 2) { ?>

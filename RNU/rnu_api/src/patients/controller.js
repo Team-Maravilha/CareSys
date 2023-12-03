@@ -67,6 +67,83 @@ const Get_Patient_Info = (req, res) => {
 
 /**
  * @swagger
+ * /api/patients/patient/marry:
+ *  post:
+ *      tags: [Utentes]
+ *      summary: Associar Cônjugue a um Utente
+ *      description: Associa um Cônjugue a um Utente
+ *      parameters:
+ *          - in: body
+ *            name: hashed_id
+ *            required: true
+ *            description: ID do Utente
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  hashed_id:
+ *                      type: string
+ *          - in: body
+ *            name: hashed_id_user
+ *            required: true
+ *            description: ID do Cônjugue
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  hashed_id_user:
+ *                      type: string
+ *      responses:
+ *          '201':
+ *              description: Sucesso
+ *          '400':
+ *              description: Erro
+ */
+const Marry_Patient = (req, res) => {
+    const { hashed_id, hashed_id_user } = req.body;
+    pool.query("SELECT * FROM casar_utente($1, $2)", [hashed_id, hashed_id_user], (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+        res.status(201).json({ "status": true, "message": "Cônjugue Associado ao Utente Com Sucesso!" });
+    });
+}
+
+/**
+ * @swagger
+ * /api/patients/patient/divorce:
+ *  post:
+ *      tags: [Utentes]
+ *      summary: Divorciar Utente
+ *      description: Divorcia um Utente
+ *      parameters:
+ *          - in: body
+ *            name: hashed_id
+ *            required: true
+ *            description: ID do Utente
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  hashed_id:
+ *                      type: string
+ *      responses:
+ *          '201':
+ *              description: Sucesso
+ *          '400':
+ *              description: Erro
+ */
+const Divorce_Patient = (req, res) => {
+const { hashed_id } = req.body;
+    pool.query("SELECT * FROM divorciar_utente($1)", [hashed_id], (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+        res.status(201).json({ "status": true, "message": "Utente Divorciado com Sucesso!" });
+    });
+}
+
+/**
+ * @swagger
  * /api/patients/patient/emergency_contact/add:
  *  post:
  *      tags: [Utentes]
@@ -154,6 +231,8 @@ const hashed_id = req.params.hashed_id;
 module.exports = {
     Get_Patients_Table,
     Get_Patient_Info,
+    Marry_Patient,
+    Divorce_Patient,
     Add_Patient_Emergency_Contact,
     Get_Patient_Emergency_Contacts
 };
