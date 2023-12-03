@@ -15,4 +15,5 @@ router.post('/patient/emergency_contacts/add', controller.Add_Patient_Emergency_
 
 router.get('/patient/emergency_contacts/:hashed_id', controller.Get_Patient_Emergency_Contacts)
 
+router.delete('/patient/emergency_contacts/delete/:id', controller.Delete_Patient_Emergency_Contact) 
 module.exports = router;

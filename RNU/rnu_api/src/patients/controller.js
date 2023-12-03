@@ -184,8 +184,9 @@ const { hashed_id } = req.body;
  *              description: Erro
  */
 const Add_Patient_Emergency_Contact = (req, res) => {
-const { hashed_id, nome, contacto,  } = req.body;
-    pool.query("SELECT * FROM adicionar_contacto_emergencia($1, $2)", [hashed_id, nome, contacto], (error, results) => {
+
+    const { hashed_id, nome, contacto  } = req.body;
+    pool.query("SELECT * FROM adicionar_contacto_emergencia($1, $2, $3)", [hashed_id, nome, contacto], (error, results) => {
         if (error) {
             res.status(400).json({ error: error.message });
             return;
@@ -228,11 +229,23 @@ const hashed_id = req.params.hashed_id;
     });
 }
 
+const Delete_Patient_Emergency_Contact = (req, res) => {
+    const id = req.params.id;
+    pool.query("SELECT * FROM remover_contacto_emergencia($1)", [id], (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+        res.status(200).json(results.rows);
+    });
+}
+
 module.exports = {
     Get_Patients_Table,
     Get_Patient_Info,
     Marry_Patient,
     Divorce_Patient,
     Add_Patient_Emergency_Contact,
-    Get_Patient_Emergency_Contacts
+    Get_Patient_Emergency_Contacts,
+    Delete_Patient_Emergency_Contact
 };
