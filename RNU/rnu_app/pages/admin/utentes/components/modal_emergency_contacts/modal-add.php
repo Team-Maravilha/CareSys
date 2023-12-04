@@ -8,9 +8,9 @@
                 </div>
             </div>
 
-            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+            <div class="modal-body mx-5 mx-xl-15 my-7">
                 <form id="modal-add-emergency-contact-form" class="form" action="#">
-                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="modal-add-emergency-contact-form-scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#modal-add-emergency-contact-header" data-kt-scroll-wrappers="#modal-add-emergency-contact-form-scroll" data-kt-scroll-offset="350px" style="max-height: 91px;">
+                    <div class="d-flex flex-column me-n7 pe-7" id="modal-add-emergency-contact-form-scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#modal-add-emergency-contact-header" data-kt-scroll-wrappers="#modal-add-emergency-contact-form-scroll" data-kt-scroll-offset="350px" style="max-height: 91px;">
                         <div class="row g-6">
                             
                             <div class="col-12">
