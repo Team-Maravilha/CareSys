@@ -7,9 +7,15 @@ CREATE TABLE utente (
   tipo_documento        int NOT NULL, 
   num_cc                int NOT NULL UNIQUE, 
   data_validade_cc      date NOT NULL, 
+<<<<<<< HEAD
   cod_validacao_cc      varchar(255) NOT NULL, 
   num_utente            int NOT NULL UNIQUE, 
   num_ident_seg_social  bigint NOT NULL UNIQUE, 
+=======
+  cod_validacao_cc      varchar(4) NOT NULL, 
+  num_utente            int NOT NULL UNIQUE, 
+  num_ident_seg_social  int NOT NULL UNIQUE, 
+>>>>>>> main
   num_ident_fiscal      int NOT NULL UNIQUE, 
   estado_civil          int NOT NULL, 
   situacao_profissional int NOT NULL, 
@@ -44,12 +50,15 @@ ALTER TABLE utente ALTER COLUMN data_criacao SET DEFAULT NOW();
 ALTER TABLE utente ALTER COLUMN num_utente DROP NOT NULL;
 ALTER TABLE utente ALTER COLUMN estado SET DEFAULT ;
 
+<<<<<<< HEAD
 ALTER TABLE utente ALTER COLUMN num_ident_seg_social TYPE bigint USING num_ident_seg_social::bigint;
 
 ALTER TABLE utente ADD COLUMN data_resposta timestamp;
 
 ALTER TABLE utente ALTER COLUMN data_resposta DROP NOT NULL;
 
+=======
+>>>>>>> main
 CREATE TABLE morada (
   id_morada           SERIAL NOT NULL, 
   id_utente           int NOT NULL, 
@@ -74,9 +83,12 @@ CREATE TABLE descendente (
   data_associacao       timestamp NOT NULL, 
   PRIMARY KEY (id_utente, 
   id_descendente_utente));
+<<<<<<< HEAD
 
   ALTER TABLE descendente ALTER COLUMN data_associacao SET DEFAULT NOW();
 
+=======
+>>>>>>> main
 CREATE TABLE conjuge (
   id_casamento      int NOT NULL, 
   id_utente         int NOT NULL, 
@@ -164,4 +176,7 @@ ALTER TABLE concelho ADD CONSTRAINT FKConcelho539315 FOREIGN KEY (id_distrito_es
 ALTER TABLE morada ADD CONSTRAINT FKMorada398007 FOREIGN KEY (id_concelho) REFERENCES concelho (id_concelho);
 ALTER TABLE morada ADD CONSTRAINT FKMorada639710 FOREIGN KEY (id_utente) REFERENCES utente (id_utente);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
