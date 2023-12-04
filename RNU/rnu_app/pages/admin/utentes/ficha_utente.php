@@ -110,6 +110,18 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_3") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_3">Cônjuges</a>
                                             </li>
 
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_4") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_4">Medicação Especial</a>
+                                            </li>
+
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_5") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_5">Isenções</a>
+                                            </li>
+
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_6") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_6">Comparticipação Medicação</a>
+                                            </li>
+
                                         </ul>
 
                                     </div>
@@ -120,6 +132,9 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                 if ($get_tab === "patient_tab_1") require_once("components/info.php");
                                 else if ($get_tab === "patient_tab_2") require_once("components/emergency_contacts.php");
                                 else if ($get_tab === "patient_tab_3") require_once("components/marriages.php");
+                                else if ($get_tab === "patient_tab_4") require_once("components/special_medication.php");
+                                else if ($get_tab === "patient_tab_5") require_once("components/exemptions.php");
+                                else if ($get_tab === "patient_tab_6") require_once("components/medication_contribution.php");
                                 ?>
 
 
