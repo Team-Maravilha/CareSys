@@ -5,6 +5,8 @@ const cors = require("cors");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
+const consultationsRoutes = require("./src/consultations/routes");
+
 const app = express();
 const port = 4001;
 const swaggerOptions = {
@@ -33,5 +35,6 @@ app.get("/", (req, res) => {
     res.send("Bem-Vindo(a) à API do CareSys | SCLINICO");
 });
 
+app.use("/api/consultations", consultationsRoutes);
 
 app.listen(port, () => console.log(`Servidor ativo na porta: ${port}`));
