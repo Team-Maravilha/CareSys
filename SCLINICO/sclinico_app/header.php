@@ -53,7 +53,7 @@
                         <div class="menu-item here show menu-here-bg me-0 me-lg-2">
                             <!--begin:Menu link-->
                             <span class="menu-link">
-                                <a href="<?php echo $link_home; ?>pages/admin/consultas/nova"><span class="menu-title">Nova Consultas</span></a>
+                                <a href="<?php echo $link_home; ?>pages/admin/consultas/nova"><span class="menu-title">Nova Consulta</span></a>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
                             <!--end:Menu link-->
