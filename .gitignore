@@ -7,3 +7,7 @@ SCLINICO/sclinico_app/.DS_Store
 SCLINICO/sclinico_bd/.DS_Store
 SCLINICO/sclinico_api/.DS_Store
 *.vsidx
+.vs
+*.vs
+.vscode
+*.vscode
