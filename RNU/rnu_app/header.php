@@ -15,14 +15,26 @@ $count = $num_count["response"]["0"]["ver_pedidos_utentes_contador"];
             </div>
         </div>
         <!--end::Header mobile toggle-->
-        <!--begin::Logo-->
+
+        <?php if ($_SESSION["active_role"] === "Admin") { ?>
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
             <a href="<?php echo $link_home ?>pages/admin/index" ?>
                 <img alt="Logo" src="<?php echo $link_home ?>assets/media/uploads/rnu/logo_rnu.png" class="h-10px d-lg-none" />
                 <img alt="Logo" src="<?php echo $link_home ?>assets/media/uploads/rnu/logo_rnu.png" class="h-30px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
             </a>
         </div>
-        <!--end::Logo-->
+        <?php } ?>
+
+        <?php if ($_SESSION["active_role"] === "Office") { ?>
+        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
+            <a href="<?php echo $link_home ?>pages/office/index" ?>
+                <img alt="Logo" src="<?php echo $link_home ?>assets/media/uploads/rnu/logo_rnu.png" class="h-10px d-lg-none" />
+                <img alt="Logo" src="<?php echo $link_home ?>assets/media/uploads/rnu/logo_rnu.png" class="h-30px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
+            </a>
+        </div>
+        <?php } ?>
+
+
         <!--begin::Header wrapper-->
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
 
@@ -49,7 +61,7 @@ $count = $num_count["response"]["0"]["ver_pedidos_utentes_contador"];
                             <span class="menu-link">
                                 <a href="<?php echo $link_home; ?>pages/admin/pedidos/lista"><span class="menu-title">Pedidos</span></a>
                                 <span class="menu-arrow d-lg-none"></span>
-                                <span class="badge badge-sm badge-circle badge-danger ms-1 blinking-badge"><?php echo $count?></span>
+                                <span class="badge badge-sm badge-circle badge-danger ms-1 blinking-badge"><?php echo $count ?></span>
                             </span>
                             <!--end:Menu link-->
                         </div>
@@ -75,28 +87,25 @@ $count = $num_count["response"]["0"]["ver_pedidos_utentes_contador"];
                 <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
                     <div class="menu menu-rounded menu-active-bg menu-state-primary menu-column menu-lg-row menu-title-gray-700 menu-icon-gray-500 menu-arrow-gray-500 menu-bullet-gray-500 my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
 
-                        <!-- Agenda -->
+                        <!-- Inicio -->
                         <div class="menu-item here show menu-here-bg me-0 me-lg-2">
+                            <!--begin:Menu link-->
                             <span class="menu-link">
-                                <a href="<?php echo $link_home; ?>pages/doctor/index"><span class="menu-title">Agenda</span></a>
+                                <a href="<?php echo $link_home; ?>pages/office/index"><span class="menu-title">Início</span></a>
                                 <span class="menu-arrow d-lg-none"></span>
                             </span>
+                            <!--end:Menu link-->
                         </div>
 
-                        <!-- Consultas -->
+                        <!-- Pedidos -->
                         <div class="menu-item here show menu-here-bg me-0 me-lg-2">
+                            <!--begin:Menu link-->
                             <span class="menu-link">
-                                <a href="<?php echo $link_home; ?>pages/doctor/appointments/list"><span class="menu-title">Consultas</span></a>
+                                <a href="<?php echo $link_home; ?>pages/office/pedidos/lista"><span class="menu-title">Pedidos</span></a>
                                 <span class="menu-arrow d-lg-none"></span>
+                                <span class="badge badge-sm badge-circle badge-danger ms-1 blinking-badge"><?php echo $count ?></span>
                             </span>
-                        </div>
-
-                        <!-- Medicação -->
-                        <div class="menu-item here show menu-here-bg me-0 me-lg-2">
-                            <span class="menu-link">
-                                <a href="<?php echo $link_home; ?>pages/doctor/usual_medication_request/list"><span class="menu-title">Pedidos Medicação</span></a>
-                                <span class="menu-arrow d-lg-none"></span>
-                            </span>
+                            <!--end:Menu link-->
                         </div>
 
                     </div>
