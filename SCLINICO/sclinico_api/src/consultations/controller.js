@@ -80,6 +80,16 @@ const Get_All_Consultations = (req, res) => {
     });
 }
 
+const Get_All_Consultations_for_DataTable = (req, res) => {
+    pool.query("SELECT * FROM ver_consultas()", (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+        res.status(200).json({ data: results.rows, recordsTotal: results.rows.length, recordsFiltered: results.rows.length });
+    });
+}
+
 const Get_Consultations_By_Utente = (req, res) => {
     const hashed_id_utente = req.params.hashed_id;
     pool.query("SELECT * FROM ver_consultas($1)", [hashed_id_utente], (error, results) => {
@@ -89,6 +99,18 @@ const Get_Consultations_By_Utente = (req, res) => {
         }
 
         res.status(200).json(results.rows);
+    });
+}
+
+const Get_Consultations_By_Utente_for_DataTable = (req, res) => {
+    const hashed_id_utente = req.params.hashed_id;
+    pool.query("SELECT * FROM ver_consultas($1)", [hashed_id_utente], (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+
+        res.status(200).json({ data: results.rows, recordsTotal: results.rows.length, recordsFiltered: results.rows.length });
     });
 }
 
@@ -108,6 +130,10 @@ const Add_Consultation = (req, res) => {
 
 
 
+
+
+
+
 module.exports = {
     Get_All_Vacines,
     Get_All_Patologies,
@@ -117,6 +143,8 @@ module.exports = {
     Get_All_Specialities,
     Get_All_Diagnosis,
     Get_All_Consultations,
+    Get_All_Consultations_for_DataTable,
     Get_Consultations_By_Utente,
+    Get_Consultations_By_Utente_for_DataTable,
     Add_Consultation
 };
