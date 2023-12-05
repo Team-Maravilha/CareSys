@@ -1,0 +1,94 @@
+:root {
+  --bs-primary: #83b6b9;
+  --bs-text-primary: #83b6b9;
+  --bs-link-color: #83b6b9;
+  --bs-link-color-rgb: 131 182 185;
+  --bs-primary-active: #4e878c;
+  --bs-link-hover-color: #4e878c;
+  --bs-link-hover-color-rgb: 78, 135, 140;
+  --bs-primary-light: #d6ffea;
+  --bs-text-primary: #4e878c !important;
+
+  --bs-component-active-bg: #83b6b9;
+  --bs-component-hover-color: #83b6b9;
+  --bs-component-checked-bg: #83b6b9;
+
+  --bs-menu-link-color-hover: #83b6b9;
+  --bs-menu-link-color-show: #83b6b9;
+  --bs-menu-link-color-here: #83b6b9;
+  --bs-menu-link-color-active: #83b6b9;
+
+  --bs-nav-pills-link-active-bg: #83b6b9;
+  --bs-nav-pills-link-active-color: #fff;
+
+  --bs-app-toolbar-bg: url(/assets/media/uploads/sclinico/background.svg);
+}
+
+.text-green {
+  color: #4e878c !important;
+}
+
+.background-green {
+  background-color: #4e878c !important;
+}
+
+.nav-pills {
+  --bs-nav-pills-link-active-bg: #83b6b9;
+}
+.form-check-input:checked {
+  background-color: #83b6b9;
+}
+
+.link-primary {
+  color: #83b6b9 !important;
+}
+
+.link-primary:focus,
+.link-primary:hover {
+  color: var(--bs-primary-active) !important;
+}
+
+.bg-blur {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(15px) !important;
+}
+
+.bg-role {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* background: linear-gradient(90deg, rgba(1, 145, 71, 1) 0%, rgba(234, 189, 0, 1) 43%, rgba(206, 21, 0, 1) 100%); */
+  background-image: url(/assets/media/uploads/fundo_sessao.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #777;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blinking-badge {
+  animation: blink 1s infinite;
+}
