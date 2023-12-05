@@ -71,7 +71,8 @@ const Get_All_Diagnosis = (req, res) => {
 }
 
 const Get_All_Consultations = (req, res) => {
-    pool.query("SELECT * FROM ver_consultas()", (error, results) => {
+    const { hashed_id, status , data_inicio, id_medico } = req.body;
+    pool.query("SELECT * FROM ver_consultas($1, $2, $3, $4)", [hashed_id, status, data_inicio, id_medico], (error, results) => {
         if (error) {
             res.status(400).json({ error: error.message });
             return;
@@ -81,35 +82,12 @@ const Get_All_Consultations = (req, res) => {
 }
 
 const Get_All_Consultations_for_DataTable = (req, res) => {
-    pool.query("SELECT * FROM ver_consultas()", (error, results) => {
+    const { hashed_id, status , data_inicio, id_medico } = req.body;
+    pool.query("SELECT * FROM ver_consultas($1, $2, $3, $4)", [hashed_id, status, data_inicio, id_medico], (error, results) => {
         if (error) {
             res.status(400).json({ error: error.message });
             return;
         }
-        res.status(200).json({ data: results.rows, recordsTotal: results.rows.length, recordsFiltered: results.rows.length });
-    });
-}
-
-const Get_Consultations_By_Utente = (req, res) => {
-    const hashed_id_utente = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_consultas($1)", [hashed_id_utente], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-
-        res.status(200).json(results.rows);
-    });
-}
-
-const Get_Consultations_By_Utente_for_DataTable = (req, res) => {
-    const hashed_id_utente = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_consultas($1)", [hashed_id_utente], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-
         res.status(200).json({ data: results.rows, recordsTotal: results.rows.length, recordsFiltered: results.rows.length });
     });
 }
@@ -144,7 +122,5 @@ module.exports = {
     Get_All_Diagnosis,
     Get_All_Consultations,
     Get_All_Consultations_for_DataTable,
-    Get_Consultations_By_Utente,
-    Get_Consultations_By_Utente_for_DataTable,
     Add_Consultation
 };
