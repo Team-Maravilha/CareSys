@@ -67,6 +67,8 @@ CREATE TABLE unidade_saude_familiar (
   data_associacao    timestamp NOT NULL, 
   data_desassociacao timestamp, 
   PRIMARY KEY (id_usf));
+
+ALTER TABLE unidade_saude_familiar ALTER COLUMN data_associacao SET DEFAULT NOW();
 CREATE TABLE descendente (
   id_utente             int NOT NULL, 
   id_descendente_utente int NOT NULL, 
