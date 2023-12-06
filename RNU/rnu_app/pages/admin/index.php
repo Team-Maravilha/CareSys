@@ -54,7 +54,7 @@
 														</div>
 
 														<div class="col-4">
-															<a href="<?php echo $link_home ?>profile">
+															<a href="utentes/lista">
 																<div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
 																	<div class="symbol symbol-30px me-5 mb-8">
 																		<span class="symbol-label">

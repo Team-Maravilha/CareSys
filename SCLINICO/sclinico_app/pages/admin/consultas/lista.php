@@ -108,9 +108,11 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                                         <th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="1">Médico</th>
                                                         <th class="ps-4 fs-6 min-w-150px" data-priority="2">Utente</th>
                                                         <th class="ps-4 fs-6 min-w-150px" data-priority="3">Unidade de Saúde</th>
-                                                        <th class="ps-4 fs-6 min-w-100px" data-priority="4">Hora</th>
-                                                        <th class="ps-4 fs-6 min-w-80px" data-priority="5">Estado</th>
-                                                        <th class="pe-4 fs-6 min-w-50px text-sm-end rounded-end" data-priority="6">Ações</th>
+                                                        <th class="ps-4 fs-6 min-w-100px" data-priority="4">Especialidade</th>
+                                                        <th class="ps-4 fs-6 min-w-100px" data-priority="5">Gabinete</th>
+                                                        <th class="ps-4 fs-6 min-w-100px" data-priority="6">Hora</th>
+                                                        <th class="ps-4 fs-6 min-w-80px" data-priority="7">Estado</th>
+                                                        <th class="pe-4 fs-6 min-w-50px text-sm-end rounded-end" data-priority="8">Ações</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -212,6 +214,12 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             data: "id_consulta"
                         },
                         {
+                            data: "id_especialidade"
+                        },
+                        {
+                            data: "id_gabinete"
+                        },
+                        {
                             data: "hora_inicio"
                         },
                         {
@@ -266,6 +274,34 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             targets: 3,
                             orderable: true,
                             render: (data, type, row) => {
+                                return `
+									<div class="d-inline-flex align-items-center">                                
+										<div class="d-flex justify-content-center flex-column">
+										<span class="mb-1 fs-6 lh-sm">${row.nome_especialidade}</span>
+										</div>
+									</div>
+								`;
+
+                            },
+                        },
+                        {
+                            targets: 4,
+                            orderable: true,
+                            render: (data, type, row) => {
+                                return `
+									<div class="d-inline-flex align-items-center">                                
+										<div class="d-flex justify-content-center flex-column">
+										<span class="mb-1 fs-6 lh-sm">${row.numero_gabinete}</span>
+										</div>
+									</div>
+								`;
+
+                            },
+                        },
+                        {
+                            targets: 5,
+                            orderable: true,
+                            render: (data, type, row) => {
 
                                 const formattedHour = moment(row.hora_inicio, "HH:mm:ss").format("HH:mm");
                                 const formattedDate = moment(row.data_inicio).format('DD/MM/YYYY');
@@ -280,7 +316,7 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             },
                         },
                         {
-                            targets: 4,
+                            targets: 6,
                             orderable: true,
                             render: (data, type, row) => {
                                 if (row.status === 0) {
@@ -388,8 +424,7 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             const id = button.getAttribute("data-id")
 
                             const data = {
-                                hashed_id_appointment: id,
-                                status: 3
+                                hashed_id: id
                             }
 
                             const options = {
@@ -400,7 +435,7 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                 },
                             }
 
-                            fetch("http://localhost:3000/api/appointments/change_status", options)
+                            fetch("http://localhost:4001/api/consultations/consultas/cancelar", options)
                                 .then((response) => {
                                     response.text().then((json) => {
                                         json = JSON.parse(json)
