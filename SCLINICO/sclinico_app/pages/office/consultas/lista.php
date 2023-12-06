@@ -1,18 +1,24 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/head.php") ?>
+<?php require_once($_SERVER["DOCUMENT_ROOT"] . "/api/rnu_api.php") ?>
 <?php
+$rnuapi = new RnuApi();
+
+$doctors = $rnuapi->fetch("doctors/list", null, null);
+$doctors_list = $doctors["response"];
+
 $page_name = "CareSys | SCLINICO - Consultas";
 ?>
 
 <body id="kt_app_body" data-kt-app-header-fixed-mobile="true" data-kt-app-toolbar-enabled="true" class="app-default">
-	<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
-		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
-			<?php require_once($_SERVER["DOCUMENT_ROOT"] . "/header.php") ?>
-			<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-				<?php require_once($_SERVER["DOCUMENT_ROOT"] . "/toolbar.php") ?>
-				<div class="app-container container-xxxl">
-					<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-						<div class="d-flex flex-column flex-column-fluid">
-							<div id="kt_app_content" class="app-content">
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/header.php") ?>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/toolbar.php") ?>
+                <div class="app-container container-xxxl">
+                    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <div class="d-flex flex-column flex-column-fluid">
+                            <div id="kt_app_content" class="app-content">
 
 
                                 <!-- Content Here -->
@@ -61,8 +67,8 @@ $page_name = "CareSys | SCLINICO - Consultas";
 
                                                             <select class="form-select form-select-solid" id="medic" data-datatable-filter="medic">
                                                                 <option value="all" selected>Todos</option>
-                                                                <?php foreach ($medic_list as $key => $value) { ?>
-                                                                    <option value="<?php echo $value["hashed_id"]; ?>" data-image="<?php echo $value["avatar_path"]; ?>"><?php echo $value["first_name"] . ' ' . $value["last_name"]; ?></option>
+                                                                <?php foreach ($doctors_list as $key => $value) { ?>
+                                                                    <option value="<?php echo $value["id_medico"]; ?>" data-image="<?php echo $default_avatar ?>"><?php echo $value["nome"] ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
@@ -112,18 +118,18 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                         </div>
                                     </div>
                                 </div>
-								<!-- End Content Here -->
+                                <!-- End Content Here -->
 
-							</div>
-						</div>
-						<?php require_once($_SERVER["DOCUMENT_ROOT"] . "/footer.php") ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            </div>
+                        </div>
+                        <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/footer.php") ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<?php require_once($_SERVER["DOCUMENT_ROOT"] . "/foo.php") ?>
+    <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/foo.php") ?>
 
     <script>
         const select2OptionFormat = (item) => {
@@ -194,7 +200,7 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                 'status': document.querySelector('select[data-datatable-filter="status"]').value === "all" ? null : document.querySelector('select[data-datatable-filter="status"]').value,
                                 'id_medico': document.querySelector('select[data-datatable-filter="medic"]').value === "all" ? null : document.querySelector('select[data-datatable-filter="medic"]').value
                             });
-                        } 
+                        }
                     },
                     columns: [{
                             data: "id_medico"
@@ -219,11 +225,10 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             targets: 0,
                             orderable: true,
                             render: (data, type, row) => {
-                                const doctor_name = row.doctor_first_name !== null && row.doctor_last_name !== null ? row.doctor_first_name + " " + row.doctor_last_name : 'Perfil sem nome';
                                 return `
 									<div class="d-inline-flex align-items-center">                                
 										<div class="d-flex justify-content-center flex-column">
-											<span class="text-dark fw-bold text-hover-primary mb-1 fs-6 lh-sm">${doctor_name}</span>
+											<span class="text-dark fw-bold text-hover-primary mb-1 fs-6 lh-sm">${row.medico}</span>
 										</div>
 									</div>
 								`
@@ -233,11 +238,10 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             targets: 1,
                             orderable: true,
                             render: (data, type, row) => {
-                                const patient_name = row.patient_first_name !== null && row.patient_last_name !== null ? row.patient_first_name + " " + row.patient_last_name : 'Perfil sem nome';
                                 return `
 									<div class="d-inline-flex align-items-center">                                
 										<div class="d-flex justify-content-center flex-column">
-										<span class="mb-1 fs-6 lh-sm">${patient_name}</span>
+										<span class="mb-1 fs-6 lh-sm">${row.utente}</span>
 										</div>
 									</div>
 								`;
@@ -251,7 +255,7 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                 return `
 									<div class="d-inline-flex align-items-center">                                
 										<div class="d-flex justify-content-center flex-column">
-										<span class="mb-1 fs-6 lh-sm">${row.health_unit_name}</span>
+										<span class="mb-1 fs-6 lh-sm">${row.unidade_saude}</span>
 										</div>
 									</div>
 								`;
@@ -263,14 +267,13 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             orderable: true,
                             render: (data, type, row) => {
 
-                                const start_tim = moment(row.start_time, 'HH:mm:ss').format('HH:mm');
-                                const end_tim = moment(row.end_time, 'HH:mm:ss').format('HH:mm');
+                                const formattedHour = moment(row.hora_inicio, "HH:mm:ss").format("HH:mm");
+                                const formattedDate = moment(row.data_inicio).format('DD/MM/YYYY');
 
-                                const formattedHour = start_tim + 'h - ' + end_tim + 'h';
                                 return `
 									<div class="d-inline-flex align-items-center">                                
 										<div class="d-flex justify-content-center flex-column">
-											<span class="mb-1 fs-6 lh-sm">${formattedHour}</span>
+											<span class="mb-1 fs-6 lh-sm">${formattedDate + ' - ' + formattedHour +'h'}</span>
 										</div>
 									</div>
 								`;
@@ -309,7 +312,7 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                 </div>
                             </div>
                         `
-                                } 
+                                }
                             },
                         },
                         {
@@ -317,25 +320,15 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             orderable: false,
                             className: "text-sm-end",
                             render: (data, type, row) => {
-                                const patient_name2 = row.patient_first_name !== null && row.patient_last_name !== null ? row.patient_first_name + " " + row.patient_last_name : 'Perfil sem nome';
-                                if (row.appointment_status === 0) {
+                                if (row.status === 0) {
                                     return `
 									<div>
-										<a href="view?id=${row.hashed_id_appointment}" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px me-1"><i class="ki-outline ki-google-play fs-2"></i></a>
-                                        <button type="button" data-id="${row.hashed_id_appointment}" data-name="${patient_name2}" data-datatable-action="conclude-row" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px"><i class="ki-outline ki-check-circle fs-2"></i></button>
-                                        <button type="button" data-id="${row.hashed_id_appointment}" data-name="${patient_name2}" data-datatable-action="missed-row" class="btn btn-icon btn-bg-light btn-color-warning btn-active-light-warning rounded w-35px h-35px"><i class="ki-outline ki-calendar-remove fs-2"></i></button>
-                                        <button type="button" data-id="${row.hashed_id_appointment}" data-name="${patient_name2}" data-datatable-action="cancel-row" class="btn btn-icon btn-bg-light btn-color-danger btn-active-light-danger rounded w-35px h-35px"><i class="ki-outline ki-information-3 fs-2"></i></button>
-                                        <button type="button" data-id="${row.hashed_id_appointment}" data-name="${patient_name2}" data-datatable-action="delete-row" class="btn btn-icon btn-bg-light btn-color-danger btn-active-light-danger rounded w-35px h-35px"><i class="ki-outline ki-trash fs-2"></i></button>
+										<a href="consulta?id=${row.hashed_id}" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px me-1"><i class="ki-outline ki-google-play fs-2"></i></a>
+                                        <button type="button" data-id="${row.hashed_id}" data-name="${row.utente}" data-datatable-action="cancel-row" class="btn btn-icon btn-bg-light btn-color-danger btn-active-light-danger rounded w-35px h-35px"><i class="ki-outline ki-information-3 fs-2"></i></button>
                                     </div>
 								`;
-                                } else if (row.appointment_status === 1) {
-                                    return `
-									<div>
-										<a href="view?id=${row.hashed_id_appointment}" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px me-1"><i class="ki-outline ki-information-2 fs-2"></i></a>
-									</div>
-								`;
                                 } else {
-                                    return ``;
+                                    return `-`;
                                 }
                             },
                         },
@@ -366,144 +359,6 @@ $page_name = "CareSys | SCLINICO - Consultas";
             }
 
             var handleDeleteRows = () => {
-                $("#datatable").on("click", "[data-datatable-action='conclude-row']", (e) => {
-                    e.preventDefault()
-                    const button = e.currentTarget
-                    const parent = button.closest("tr")
-                    const name = button.getAttribute("data-name")
-
-                    Swal.fire({
-                        icon: "success",
-                        title: "Concluir Consulta",
-                        text: "Tem a certeza que deseja a Consulta do Utente (" + name + ") ?",
-                        showCancelButton: true,
-                        buttonsStyling: false,
-                        cancelButtonText: "Não, cancelar",
-                        confirmButtonText: "Sim, concluir",
-                        reverseButtons: true,
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            const confirmButton = Swal.getConfirmButton();
-                            confirmButton.blur();
-                        },
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-primary",
-                            cancelButton: "btn fw-bold btn-active-light-warning",
-                        },
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            const id = button.getAttribute("data-id")
-
-                            const data = {
-                                hashed_id_appointment: id,
-                                status: 1
-                            }
-
-                            const options = {
-                                method: "POST",
-                                body: JSON.stringify(data),
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                            }
-
-                            fetch("http://localhost:3000/api/appointments/change_status", options)
-                                .then((response) => {
-                                    response.text().then((json) => {
-                                        json = JSON.parse(json)
-
-                                        toastr.options = {
-                                            positionClass: "toastr-top-right",
-                                            preventDuplicates: true,
-                                        }
-
-                                        if (response.status === 201) {
-                                            if (json.status === true) {
-                                                toastr.success(json.message)
-                                                dt.ajax.reload()
-                                            }
-                                        } else if (response.status === 401) {
-                                            toastr.error(json.error)
-                                        } else {
-                                            toastr.error(json.error)
-                                        }
-                                    })
-                                })
-                                .catch((error) => {
-                                    console.error(error)
-                                })
-                        }
-                    })
-                })
-                $("#datatable").on("click", "[data-datatable-action='missed-row']", (e) => {
-                    e.preventDefault()
-                    const button = e.currentTarget
-                    const parent = button.closest("tr")
-                    const name = button.getAttribute("data-name")
-
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Faltou à Consulta",
-                        text: "Tem a certeza que deseja marcar Falta na Consulta do Utente (" + name + ") ?",
-                        showCancelButton: true,
-                        buttonsStyling: false,
-                        cancelButtonText: "Não, cancelar",
-                        confirmButtonText: "Sim, faltou",
-                        reverseButtons: true,
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            const confirmButton = Swal.getConfirmButton();
-                            confirmButton.blur();
-                        },
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-warning",
-                            cancelButton: "btn fw-bold btn-active-light-warning",
-                        },
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            const id = button.getAttribute("data-id")
-
-                            const data = {
-                                hashed_id_appointment: id,
-                                status: 2
-                            }
-
-                            const options = {
-                                method: "POST",
-                                body: JSON.stringify(data),
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                            }
-
-                            fetch("http://localhost:3000/api/appointments/change_status", options)
-                                .then((response) => {
-                                    response.text().then((json) => {
-                                        json = JSON.parse(json)
-
-                                        toastr.options = {
-                                            positionClass: "toastr-top-right",
-                                            preventDuplicates: true,
-                                        }
-
-                                        if (response.status === 201) {
-                                            if (json.status === true) {
-                                                toastr.success(json.message)
-                                                dt.ajax.reload()
-                                            }
-                                        } else if (response.status === 401) {
-                                            toastr.error(json.error)
-                                        } else {
-                                            toastr.error(json.error)
-                                        }
-                                    })
-                                })
-                                .catch((error) => {
-                                    console.error(error)
-                                })
-                        }
-                    })
-                })
                 $("#datatable").on("click", "[data-datatable-action='cancel-row']", (e) => {
                     e.preventDefault()
                     const button = e.currentTarget
@@ -535,75 +390,6 @@ $page_name = "CareSys | SCLINICO - Consultas";
                             const data = {
                                 hashed_id_appointment: id,
                                 status: 3
-                            }
-
-                            const options = {
-                                method: "POST",
-                                body: JSON.stringify(data),
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                            }
-
-                            fetch("http://localhost:3000/api/appointments/change_status", options)
-                                .then((response) => {
-                                    response.text().then((json) => {
-                                        json = JSON.parse(json)
-
-                                        toastr.options = {
-                                            positionClass: "toastr-top-right",
-                                            preventDuplicates: true,
-                                        }
-
-                                        if (response.status === 201) {
-                                            if (json.status === true) {
-                                                toastr.success(json.message)
-                                                dt.ajax.reload()
-                                            }
-                                        } else if (response.status === 401) {
-                                            toastr.error(json.error)
-                                        } else {
-                                            toastr.error(json.error)
-                                        }
-                                    })
-                                })
-                                .catch((error) => {
-                                    console.error(error)
-                                })
-                        }
-                    })
-                })
-                $("#datatable").on("click", "[data-datatable-action='delete-row']", (e) => {
-                    e.preventDefault()
-                    const button = e.currentTarget
-                    const parent = button.closest("tr")
-                    const name = button.getAttribute("data-name")
-
-                    Swal.fire({
-                        icon: "error",
-                        title: "Eliminar Consulta",
-                        text: "Tem a certeza que deseja Eliminar a Consulta do Utente (" + name + ") ?",
-                        showCancelButton: true,
-                        buttonsStyling: false,
-                        cancelButtonText: "Não, cancelar",
-                        confirmButtonText: "Sim, eliminar",
-                        reverseButtons: true,
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            const confirmButton = Swal.getConfirmButton();
-                            confirmButton.blur();
-                        },
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-danger",
-                            cancelButton: "btn fw-bold btn-active-light-warning",
-                        },
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            const id = button.getAttribute("data-id")
-
-                            const data = {
-                                hashed_id_appointment: id,
-                                status: 4
                             }
 
                             const options = {
