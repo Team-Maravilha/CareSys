@@ -15,6 +15,8 @@ router.post('/consultas', controller.Get_All_Consultations);
 router.post('/consultas/table', controller.Get_All_Consultations_for_DataTable);
 
 router.post('/consultas/adicionar', controller.Add_Consultation);
+router.post('/consultas/realizar', controller.Do_Consultation);
+router.post('/consultas/cancelar', controller.Cancel_Consultation);
 
 
 module.exports = router;

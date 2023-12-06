@@ -222,6 +222,32 @@ const Add_Consultation = (req, res) => {
     });
 }
 
+const Do_Consultation = (req, res) => {
+    const { hashed_id, problemas, obs_gerais, recomendacoes, tratamento, progresso, consentimento, autorizacao, diagnosticos_consulta, patologias_consulta } = req.body;
+
+    pool.query("SELECT realizar_consulta($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [hashed_id, problemas, obs_gerais, recomendacoes, tratamento, progresso, consentimento, autorizacao, diagnosticos_consulta, patologias_consulta], (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+
+        res.status(201).json({ status: true, message: "Consulta realizada com sucesso!" })
+    });
+}
+
+const Cancel_Consultation = (req, res) => {
+    const { hashed_id } = req.body;
+
+    pool.query("SELECT cancelar_consulta($1)", [hashed_id], (error, results) => {
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+
+        res.status(201).json({ status: true, message: "Consulta cancelada com sucesso!" })
+    });
+}
+
 
 
 
@@ -239,5 +265,7 @@ module.exports = {
     Get_All_Diagnosis,
     Get_All_Consultations,
     Get_All_Consultations_for_DataTable,
-    Add_Consultation
+    Add_Consultation,
+    Do_Consultation,
+    Cancel_Consultation
 };
