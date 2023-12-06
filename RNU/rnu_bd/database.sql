@@ -122,6 +122,9 @@ CREATE TABLE medico (
   nome         varchar(255) NOT NULL, 
   data_criacao timestamp NOT NULL, 
   PRIMARY KEY (id_medico));
+
+ALTER TABLE medico ALTER COLUMN data_criacao SET DEFAULT NOW();
+
 CREATE TABLE medico_unidade_saude (
   id_medico_unidade_saude        SERIAL NOT NULL, 
   id_usf int NOT NULL, 

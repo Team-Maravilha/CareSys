@@ -7,6 +7,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const requestsRoutes = require("./src/requests/routes");
 const patientsRoutes = require("./src/patients/routes");
+const doctorsRoutes = require("./src/doctors/routes");
 
 const app = express();
 const port = 4000;
@@ -39,5 +40,7 @@ app.get("/", (req, res) => {
 app.use("/api/requests", requestsRoutes);
 
 app.use("/api/patients", patientsRoutes);
+
+app.use("/api/doctors", doctorsRoutes);
 
 app.listen(port, () => console.log(`Servidor ativo na porta: ${port}`));
