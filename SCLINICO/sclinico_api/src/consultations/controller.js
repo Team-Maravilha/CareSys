@@ -70,32 +70,149 @@ const Get_All_Diagnosis = (req, res) => {
     });
 }
 
-const Get_All_Consultations = (req, res) => {
-    const { hashed_id, status , data_inicio, id_medico } = req.body;
-    pool.query("SELECT * FROM ver_consultas($1, $2, $3, $4)", [hashed_id, status, data_inicio, id_medico], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json(results.rows);
-    });
-}
+const Get_All_Consultations = async (req, res) => {
+    const axios = require('axios').default;
+    const { hashed_id, status, data_inicio, id_medico } = req.body;
+    try {
+        const results = await new Promise((resolve, reject) => {
+            pool.query("SELECT * FROM ver_consultas($1, $2, $3, $4)", [hashed_id, status, data_inicio, id_medico], (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
 
-const Get_All_Consultations_for_DataTable = (req, res) => {
-    const { hashed_id, status , data_inicio, id_medico } = req.body;
-    pool.query("SELECT * FROM ver_consultas($1, $2, $3, $4)", [hashed_id, status, data_inicio, id_medico], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
+        let consultas = results.rows;
+
+        // Load HealthUnits from Another API
+        const healthUnitsResponse = await axios.get('http://localhost:4000/api/health_units/list');
+        //CHECK CONNECTION ERROR
+        if (healthUnitsResponse.error) {
+            res.status(400).json({ error: 'Erro ao carregar unidades de saúde' });
         }
-        res.status(200).json({ data: results.rows, recordsTotal: results.rows.length, recordsFiltered: results.rows.length });
-    });
+        const unidades_saude = healthUnitsResponse.data;
+
+        // Load Doctors from Another API
+        const doctorsResponse = await axios.get('http://localhost:4000/api/doctors/list');
+        if (doctorsResponse.error) {
+            res.status(400).json({ error: 'Erro ao carregar médicos' });
+        }
+        const medicos = doctorsResponse.data;
+
+        // Load Patients from Another API
+        const patientsResponse = await axios.get('http://localhost:4000/api/patients/table');
+        if (patientsResponse.data.recordsTotal === 0) {
+            res.status(400).json({ error: 'Erro ao carregar utentes' });
+        }
+        const utentes = patientsResponse.data.data;
+    
+
+        // Map over consultas and update with additional information
+        consultas = consultas.map((consulta) => {
+            const unidade_saude = unidades_saude.find(usf => usf.id_usf == consulta.id_unidade_saude);
+            const medico = medicos.find(medico => medico.id_medico == consulta.id_medico);
+            const utente = utentes.find(utente => utente.hashed_id == consulta.id_utente);
+
+            if (!unidade_saude || !medico || !utente) {
+                //REMOVE CONSULTA
+                return null;
+            }
+
+            return {
+                ...consulta,
+                unidade_saude: unidade_saude.nome,
+                medico: medico.nome,
+                utente: utente.nome,
+                num_utente: utente.num_utente
+            };
+        });
+
+        // Remove null values from consultas
+        consultas = consultas.filter(consulta => consulta !== null);
+
+
+        res.status(200).json({ consultas });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+const Get_All_Consultations_for_DataTable = async (req, res) => {
+    const axios = require('axios').default;
+    const { hashed_id, status, data_inicio, id_medico } = req.body;
+    try {
+        const results = await new Promise((resolve, reject) => {
+            pool.query("SELECT * FROM ver_consultas($1, $2, $3, $4)", [hashed_id, status, data_inicio, id_medico], (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+
+        let consultas = results.rows;
+
+        // Load HealthUnits from Another API
+        const healthUnitsResponse = await axios.get('http://localhost:4000/api/health_units/list');
+        //CHECK CONNECTION ERROR
+        if (healthUnitsResponse.error) {
+            res.status(400).json({ error: 'Erro ao carregar unidades de saúde' });
+        }
+        const unidades_saude = healthUnitsResponse.data;
+
+        // Load Doctors from Another API
+        const doctorsResponse = await axios.get('http://localhost:4000/api/doctors/list');
+        if (doctorsResponse.error) {
+            res.status(400).json({ error: 'Erro ao carregar médicos' });
+        }
+        const medicos = doctorsResponse.data;
+
+        // Load Patients from Another API
+        const patientsResponse = await axios.get('http://localhost:4000/api/patients/table');
+        if (patientsResponse.data.recordsTotal === 0) {
+            res.status(400).json({ error: 'Erro ao carregar utentes' });
+        }
+        const utentes = patientsResponse.data.data;
+    
+
+        // Map over consultas and update with additional information
+        consultas = consultas.map((consulta) => {
+            const unidade_saude = unidades_saude.find(usf => usf.id_usf == consulta.id_unidade_saude);
+            const medico = medicos.find(medico => medico.id_medico == consulta.id_medico);
+            const utente = utentes.find(utente => utente.hashed_id == consulta.id_utente);
+
+            if (!unidade_saude || !medico || !utente) {
+                //REMOVE CONSULTA
+                return null;
+            }
+
+            return {
+                ...consulta,
+                unidade_saude: unidade_saude.nome,
+                medico: medico.nome,
+                utente: utente.nome,
+                num_utente: utente.num_utente
+            };
+        });
+
+        // Remove null values from consultas
+        consultas = consultas.filter(consulta => consulta !== null);
+
+
+        res.status(200).json({ data: consultas, recordsTotal: consultas.length, recordsFiltered: consultas.length });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 }
 
 const Add_Consultation = (req, res) => {
-    const { id_utente, id_gabinete, id_especialidade, id_medico, data_inicio, hora_inicio, tipo_consulta } = req.body;
+    const { id_utente, id_unidade_saude, id_gabinete, id_especialidade, id_medico, data_inicio, hora_inicio, tipo_consulta } = req.body;
 
-    pool.query("SELECT adicionar_consulta($1, $2, $3, $4, $5, $6, $7)", [id_utente, id_gabinete, id_especialidade, id_medico, data_inicio, hora_inicio, tipo_consulta], (error, results) => {
+    pool.query("SELECT adicionar_consulta($1, $2, $3, $4, $5, $6, $7, $8)", [id_utente, id_unidade_saude, id_gabinete, id_especialidade, id_medico, data_inicio, hora_inicio, tipo_consulta], (error, results) => {
         if (error) {
             res.status(400).json({ error: error.message });
             return;
