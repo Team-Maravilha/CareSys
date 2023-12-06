@@ -11,6 +11,8 @@ router.get('/exames', controller.Get_All_Exams);
 router.get('/especialidades', controller.Get_All_Specialities);
 router.get('/diagnosticos', controller.Get_All_Diagnosis);
 
+router.get('/consulta/:hashed_id_consulta', controller.Get_Consultation_By_Id);
+
 router.post('/consultas', controller.Get_All_Consultations);
 router.post('/consultas/table', controller.Get_All_Consultations_for_DataTable);
 

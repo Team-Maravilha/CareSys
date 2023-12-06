@@ -87,9 +87,9 @@ $health_unit_list = $health_unit["response"];
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Tipo Consulta</label>
                                                         <select class="form-select form-select-solid" name="tipo_consulta" data-control="select2" data-placeholder="Selecione o Tipo de Consulta">
                                                             <option></option>
-                                                            <option value="0">Urgência</option>
-                                                            <option value="1">Rotina</option>
-                                                            <option value="2">Acompanhamento</option>
+                                                            <option value="1">Urgência</option>
+                                                            <option value="2">Rotina</option>
+                                                            <option value="3">Acompanhamento</option>
                                                         </select>
                                                     </div>
                                                    

@@ -103,6 +103,10 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                             </li>
 
                                             <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_7") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_7">Consultas</a>
+                                            </li>
+
+                                            <li class="nav-item mt-2">
                                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 <?php if ($get_tab === "patient_tab_2") echo "active"; ?>" href="?id=<?php echo $hashed_id; ?>&tab=patient_tab_2">Contactos de Emergência</a>
                                             </li>
 
@@ -135,6 +139,7 @@ $get_tab = isset($_GET["tab"]) ? $_GET["tab"] : "patient_tab_1";
                                 else if ($get_tab === "patient_tab_4") require_once("components/special_medication.php");
                                 else if ($get_tab === "patient_tab_5") require_once("components/exemptions.php");
                                 else if ($get_tab === "patient_tab_6") require_once("components/medication_contribution.php");
+                                else if ($get_tab === "patient_tab_7") require_once("components/consultations.php");
                                 ?>
 
 
