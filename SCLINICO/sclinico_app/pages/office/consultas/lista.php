@@ -75,10 +75,9 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                                             <select class="form-select form-select-solid" id="status" data-datatable-filter="status">
                                                                 <option value="all" selected>Todos</option>
                                                                 <option value="0" data-color="#7239ea">Pendente</option>
-                                                                <option value="1" data-color="#50cd89">Concluída</option>
-                                                                <option value="2" data-color="#ffc700">Não Compareceu</option>
+                                                                <option value="2" data-color="#50cd89">Concluída</option>
+                                                                <option value="1" data-color="#ffc700">Em Curso</option>
                                                                 <option value="3" data-color="#181C32">Cancelada</option>
-                                                                <option value="4" data-color="#f1416c">Eliminada</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -93,10 +92,6 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                                     </div>
                                                 </div>
 
-                                                <!-- Botão Adicionar Nova -->
-                                                <a href="add" class="btn btn-light-primary d-flex align-items-center lh-1">
-                                                    <i class="ki-outline ki-plus fs-2"></i>Adicionar
-                                                </a>
                                             </div>
                                         </div>
 
@@ -105,10 +100,10 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                                 <thead>
                                                     <tr class="fw-bold text-muted bg-light">
                                                         <th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="1">Médico</th>
-                                                        <th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="2">Utente</th>
-                                                        <th class="ps-4 fs-6 min-w-150px rounded-start" data-priority="3">Unidade de Saúde</th>
-                                                        <th class="ps-4 fs-6 min-w-100px rounded-start" data-priority="4">Hora</th>
-                                                        <th class="ps-4 fs-6 min-w-80px rounded-start" data-priority="5">Estado</th>
+                                                        <th class="ps-4 fs-6 min-w-150px" data-priority="2">Utente</th>
+                                                        <th class="ps-4 fs-6 min-w-150px" data-priority="3">Unidade de Saúde</th>
+                                                        <th class="ps-4 fs-6 min-w-100px" data-priority="4">Hora</th>
+                                                        <th class="ps-4 fs-6 min-w-80px" data-priority="5">Estado</th>
                                                         <th class="pe-4 fs-6 min-w-50px text-sm-end rounded-end" data-priority="6">Ações</th>
                                                     </tr>
                                                 </thead>
