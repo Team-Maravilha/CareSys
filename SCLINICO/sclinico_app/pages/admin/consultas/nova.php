@@ -14,6 +14,12 @@ $specialities_list = $specialities["response"];
 
 $patients = $rnuapi->fetch("patients/table", null, null);
 $patients_list = $patients["response"]["data"];
+
+$doctors = $rnuapi->fetch("doctors/list", null, null);
+$doctors_list = $doctors["response"];
+
+$health_unit = $rnuapi->fetch("health_units/list", null, null);
+$health_unit_list = $health_unit["response"];
 ?>
 
 <body id="kt_app_body" data-kt-app-header-fixed-mobile="true" data-kt-app-toolbar-enabled="true" class="app-default">
@@ -47,9 +53,9 @@ $patients_list = $patients["response"]["data"];
 
                                                 <div class="row mb-6">
 
-                                                    <div class="col-12 col-lg-4">
+                                                    <div class="col-12 col-lg-3">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Utente</label>
-                                                        <select class="form-select form-select-solid" name="id_utente" data-control="select2" data-placeholder="Selecione o Utente">
+                                                        <select class="form-select form-select-solid" name="utente" data-control="select2" data-placeholder="Selecione o Utente">
                                                             <option></option>
                                                             <?php foreach ($patients_list as $key => $value) { ?>
                                                                 <option value="<?php echo $value["hashed_id"] ?>"><?php echo $value["nome"] ?></option>
@@ -57,30 +63,39 @@ $patients_list = $patients["response"]["data"];
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-12 col-lg-4">
+                                                    <div class="col-12 col-lg-3">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Médico</label>
-                                                        <select class="form-select form-select-solid" name="hashed_id_doctor" data-control="select2" data-placeholder="Selecione o Médico">
+                                                        <select class="form-select form-select-solid" name="medico" data-control="select2" data-placeholder="Selecione o Médico">
                                                             <option></option>
                                                             <?php foreach ($doctors_list as $key => $value) { ?>
-                                                                <option value="<?php echo $value["hashed_id"] ?>"><?php echo $value["first_name"] . ' ' . $value["last_name"] ?></option>
+                                                                <option value="<?php echo $value["id_medico"] ?>"><?php echo $value["nome"] ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
 
                                                     <div class="col-12 col-lg-4">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Unidade de Saúde</label>
-                                                        <select class="form-select form-select-solid" name="hashed_id_doctor" data-control="select2" data-placeholder="Selecione o Médico">
+                                                        <select class="form-select form-select-solid" name="unidade_saude" data-control="select2" data-placeholder="Selecione a Unidade de Saúde">
                                                             <option></option>
                                                             <?php foreach ($health_unit_list as $key => $value) { ?>
-                                                                <option value="<?php echo $value["hashed_id"] ?>"><?php echo $value["first_name"] . ' ' . $value["last_name"] ?></option>
+                                                                <option value="<?php echo $value["id_usf"] ?>"><?php echo $value["nome"] ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
 
+                                                    <div class="col-12 col-lg-2">
+                                                        <label class="col-lg-12 col-form-label required fw-semibold fs-6">Tipo Consulta</label>
+                                                        <select class="form-select form-select-solid" name="tipo_consulta" data-control="select2" data-placeholder="Selecione o Tipo de Consulta">
+                                                            <option></option>
+                                                            <option value="0">Urgência</option>
+                                                            <option value="1">Rotina</option>
+                                                            <option value="2">Acompanhamento</option>
+                                                        </select>
+                                                    </div>
                                                    
-                                                    <div class="col-12 col-lg-3">
+                                                    <div class="col-12 col-lg-4">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Gabinete</label>
-                                                        <select class="form-select form-select-solid" name="hashed_id_doctor" data-control="select2" data-placeholder="Selecione o Gabinete">
+                                                        <select class="form-select form-select-solid" name="gabinete" data-control="select2" data-placeholder="Selecione o Gabinete">
                                                             <option></option>
                                                             <?php foreach ($offices_list as $key => $value) { ?>
                                                                 <option value="<?php echo $value["id_gabinete"] ?>"><?php echo $value["numero"] . ' - ' . $value["nome"] ?></option>
@@ -88,9 +103,9 @@ $patients_list = $patients["response"]["data"];
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-12 col-lg-3">
+                                                    <div class="col-12 col-lg-4">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Especialidade</label>
-                                                        <select class="form-select form-select-solid" name="hashed_id_doctor" data-control="select2" data-placeholder="Selecione a Especialidade">
+                                                        <select class="form-select form-select-solid" name="especialidade" data-control="select2" data-placeholder="Selecione a Especialidade">
                                                             <option></option>
                                                             <?php foreach ($specialities_list as $key => $value) { ?>
                                                                 <option value="<?php echo $value["id_especialidade"] ?>"><?php echo $value["codigo"] . ' - ' . $value["nome"] ?></option>
@@ -99,19 +114,9 @@ $patients_list = $patients["response"]["data"];
                                                     </div>
 
                                                     <div class="col-12 col-lg-2">
-                                                        <label class="col-lg-12 col-form-label required fw-semibold fs-6">Tipo Consulta</label>
-                                                        <select class="form-select form-select-solid" name="hashed_id_doctor" data-control="select2" data-placeholder="Selecione o Tipo de Consulta">
-                                                            <option></option>
-                                                            <?php foreach ($consultation_type_list as $key => $value) { ?>
-                                                                <option value="<?php echo $value["hashed_id"] ?>"><?php echo $value["first_name"] . ' ' . $value["last_name"] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-12 col-lg-2">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Data da Consulta</label>
                                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                                            <input class="form-control form-control-solid" autocomplete="off" placeholder="Data da Consulta" id="start_date" />
+                                                            <input class="form-control form-control-solid" autocomplete="off" placeholder="Data da Consulta" id="data_inicio" />
                                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                                         </div>
                                                     </div>
@@ -119,7 +124,7 @@ $patients_list = $patients["response"]["data"];
                                                     <div class="col-12 col-lg-2">
                                                         <label class="col-lg-12 col-form-label required fw-semibold fs-6">Hora Inicio da Consulta</label>
                                                         <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                                            <input class="form-control form-control-solid" placeholder="Hora de Inicio da Consulta" id="start_time" />
+                                                            <input class="form-control form-control-solid" placeholder="Hora de Inicio da Consulta" id="hora_inicio" />
                                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                                         </div>
                                                     </div>
@@ -153,13 +158,13 @@ $patients_list = $patients["response"]["data"];
     <?php require_once($_SERVER["DOCUMENT_ROOT"] . "/foo.php") ?>
 
     <script>
-        $("#start_date").flatpickr();
-        flatpickr("#start_date", {
+        $("#data_inicio").flatpickr();
+        flatpickr("#data_inicio", {
             dateFormat: "Y-m-d",
             locale: "pt",
             allowInput: true,
         });
-        $("#start_time").flatpickr({
+        $("#hora_inicio").flatpickr({
             enableTime: true,
             noCalendar: true,
             time_24hr: true,
@@ -174,7 +179,7 @@ $patients_list = $patients["response"]["data"];
             form.addEventListener("submit", insertappointment);
 
             const api_url = "http://localhost:4001/api/";
-            const path = "consultations/consultas/adicionar";
+            const path = "consultations/consultas/";
 
             function insertappointment() {
                 event.preventDefault();
@@ -182,16 +187,18 @@ $patients_list = $patients["response"]["data"];
                 var form = document.getElementById("form-add-appointment");
 
                 const formData = {
-                    hashed_id_health_unit: form.hashed_id_health_unit.value,
-                    hashed_id_doctor: form.hashed_id_doctor.value,
-                    hashed_id_patient: form.hashed_id_patient.value,
-                    start_date: form.start_date.value,
-                    start_time: form.start_time.value,
-                    end_time: form.end_time.value,
+                    id_utente: form.utente.value,
+                    id_medico: form.medico.value,
+                    id_unidade_saude: form.unidade_saude.value,
+                    id_gabinete: form.gabinete.value,
+                    id_especialidade: form.especialidade.value,
+                    tipo_consulta: form.tipo_consulta.value,
+                    data_inicio: form.data_inicio.value,
+                    hora_inicio: form.hora_inicio.value,
                 };
 
 
-                fetch(api_url + path + "insert", {
+                fetch(api_url + path + "adicionar", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -216,7 +223,7 @@ $patients_list = $patients["response"]["data"];
                                 },
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "list";
+                                    window.location.href = "lista";
                                 }
                             });
                         } else {
