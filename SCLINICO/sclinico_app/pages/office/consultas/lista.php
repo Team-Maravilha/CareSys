@@ -363,6 +363,12 @@ $page_name = "CareSys | SCLINICO - Consultas";
                                         <button type="button" data-id="${row.hashed_id}" data-name="${row.utente}" data-datatable-action="cancel-row" class="btn btn-icon btn-bg-light btn-color-danger btn-active-light-danger rounded w-35px h-35px"><i class="ki-outline ki-information-3 fs-2"></i></button>
                                     </div>
 								`;
+                                } else if (row.status === 2) {
+                                    return `
+									<div>
+										<a href="ver?id=${row.hashed_id}" class="btn btn-icon btn-bg-light btn-color-primary btn-active-light-primary rounded w-35px h-35px me-1"><i class="ki-outline ki-eye fs-2"></i></a>
+                                    </div>
+                                `;
                                 } else {
                                     return `-`;
                                 }

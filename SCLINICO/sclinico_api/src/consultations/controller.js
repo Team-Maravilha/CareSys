@@ -291,9 +291,9 @@ const Add_Consultation = (req, res) => {
 }
 
 const Do_Consultation = (req, res) => {
-    const { hashed_id, problemas, obs_gerais, recomendacoes, tratamento, progresso, consentimento, autorizacao, diagnosticos_consulta, patologias_consulta } = req.body;
+    const { hashed_id, problemas, obs_gerais, recomendacoes, tratamento, progresso, consentimento, autorizacao, diagnosticos_consulta, patologias_consulta, motivo } = req.body;
 
-    pool.query("SELECT realizar_consulta($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)", [hashed_id, problemas, obs_gerais, recomendacoes, tratamento, progresso, consentimento, autorizacao, diagnosticos_consulta, patologias_consulta], (error, results) => {
+    pool.query("SELECT realizar_consulta($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)", [hashed_id, problemas, obs_gerais, recomendacoes, tratamento, progresso, consentimento, autorizacao, diagnosticos_consulta, patologias_consulta, motivo], (error, results) => {
         if (error) {
             res.status(400).json({ error: error.message });
             return;
