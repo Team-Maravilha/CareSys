@@ -22,14 +22,25 @@ const pool = require("../../db");
  *              description: Erro
  */
 const Get_Patients_Table = (req, res) => {
-    pool.query("SELECT * FROM ver_utentes_tabela()", (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
-    });
-}
+  pool.query("SELECT * FROM ver_utentes_tabela()", (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json({ recordsFiltered: results.rows.length, recordsTotal: results.rows.length, data: results.rows });
+  });
+};
+ 
+const Get_PatientID = (req, res) => {
+  const num_utente = req.params.num_utente;
+  pool.query("SELECT * FROM get_patient_info_by_num_utente($1)", [num_utente], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json(results.rows);
+  });
+};
 
 /**
  * @swagger
@@ -55,15 +66,15 @@ const Get_Patients_Table = (req, res) => {
  *              description: Erro
  */
 const Get_Patient_Info = (req, res) => {
-    const hashed_id = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_info_utente($1)", [hashed_id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json(results.rows);
-    });
-}
+  const hashed_id = req.params.hashed_id;
+  pool.query("SELECT * FROM ver_info_utente($1)", [hashed_id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json(results.rows);
+  });
+};
 
 /**
  * @swagger
@@ -98,15 +109,15 @@ const Get_Patient_Info = (req, res) => {
  *              description: Erro
  */
 const Marry_Patient = (req, res) => {
-    const { hashed_id, hashed_id_user } = req.body;
-    pool.query("SELECT * FROM casar_utente($1, $2)", [hashed_id, hashed_id_user], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(201).json({ "status": true, "message": "Cônjugue Associado ao Utente Com Sucesso!" });
-    });
-}
+  const { hashed_id, hashed_id_user } = req.body;
+  pool.query("SELECT * FROM casar_utente($1, $2)", [hashed_id, hashed_id_user], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(201).json({ status: true, message: "Cônjugue Associado ao Utente Com Sucesso!" });
+  });
+};
 
 /**
  * @swagger
@@ -132,15 +143,15 @@ const Marry_Patient = (req, res) => {
  *              description: Erro
  */
 const Divorce_Patient = (req, res) => {
-    const { hashed_id } = req.body;
-    pool.query("SELECT * FROM divorciar_utente($1)", [hashed_id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(201).json({ "status": true, "message": "Utente Divorciado com Sucesso!" });
-    });
-}
+  const { hashed_id } = req.body;
+  pool.query("SELECT * FROM divorciar_utente($1)", [hashed_id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(201).json({ status: true, message: "Utente Divorciado com Sucesso!" });
+  });
+};
 
 /**
  * @swagger
@@ -184,16 +195,15 @@ const Divorce_Patient = (req, res) => {
  *              description: Erro
  */
 const Add_Patient_Emergency_Contact = (req, res) => {
-
-    const { hashed_id, nome, contacto } = req.body;
-    pool.query("SELECT * FROM adicionar_contacto_emergencia($1, $2, $3)", [hashed_id, nome, contacto], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json(results.rows);
-    });
-}
+  const { hashed_id, nome, contacto } = req.body;
+  pool.query("SELECT * FROM adicionar_contacto_emergencia($1, $2, $3)", [hashed_id, nome, contacto], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json(results.rows);
+  });
+};
 
 /**
  * @swagger
@@ -219,15 +229,15 @@ const Add_Patient_Emergency_Contact = (req, res) => {
  *              description: Erro
  */
 const Get_Patient_Emergency_Contacts = (req, res) => {
-    const hashed_id = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_contactos_emergencia($1)", [hashed_id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
-    });
-}
+  const hashed_id = req.params.hashed_id;
+  pool.query("SELECT * FROM ver_contactos_emergencia($1)", [hashed_id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json({ recordsFiltered: results.rows.length, recordsTotal: results.rows.length, data: results.rows });
+  });
+};
 
 /**
  * @swagger
@@ -253,15 +263,15 @@ const Get_Patient_Emergency_Contacts = (req, res) => {
  *              description: Erro
  */
 const Delete_Patient_Emergency_Contact = (req, res) => {
-    const id = req.params.id;
-    pool.query("SELECT * FROM remover_contacto_emergencia($1)", [id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json(results.rows);
-    });
-}
+  const id = req.params.id;
+  pool.query("SELECT * FROM remover_contacto_emergencia($1)", [id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json(results.rows);
+  });
+};
 
 /**
  * @swagger
@@ -314,15 +324,15 @@ const Delete_Patient_Emergency_Contact = (req, res) => {
  *              description: Erro
  */
 const Add_Patient_Special_Medication = (req, res) => {
-    const { hashed_id, motivo, data_inicio, data_fim } = req.body;
-    pool.query("SELECT * FROM adicionar_medicacao_especial($1, $2, $3, $4)", [hashed_id, motivo, data_inicio, data_fim], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(201).json({ "status": true, "message": "Medicação Especial adicionada ao Utente com Sucesso!" });
-    });
-}
+  const { hashed_id, motivo, data_inicio, data_fim } = req.body;
+  pool.query("SELECT * FROM adicionar_medicacao_especial($1, $2, $3, $4)", [hashed_id, motivo, data_inicio, data_fim], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(201).json({ status: true, message: "Medicação Especial adicionada ao Utente com Sucesso!" });
+  });
+};
 
 /**
  * @swagger
@@ -348,16 +358,16 @@ const Add_Patient_Special_Medication = (req, res) => {
  *              description: Erro
  */
 const Get_Patient_Special_Medication = (req, res) => {
-    const hashed_id = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_medicacao_especial($1)", [hashed_id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
+  const hashed_id = req.params.hashed_id;
+  pool.query("SELECT * FROM ver_medicacao_especial($1)", [hashed_id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
 
-        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
-    });
-}
+    res.status(200).json({ recordsFiltered: results.rows.length, recordsTotal: results.rows.length, data: results.rows });
+  });
+};
 
 /**
  * @swagger
@@ -383,15 +393,15 @@ const Get_Patient_Special_Medication = (req, res) => {
  *              description: Erro
  */
 const Delete_Patient_Special_Medication = (req, res) => {
-    const id = req.params.id;
-    pool.query("SELECT * FROM remover_medicacao_especial($1)", [id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(200).json(results.rows);
-    });
-}
+  const id = req.params.id;
+  pool.query("SELECT * FROM remover_medicacao_especial($1)", [id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(200).json(results.rows);
+  });
+};
 
 /**
  * @swagger
@@ -444,15 +454,15 @@ const Delete_Patient_Special_Medication = (req, res) => {
  *              description: Erro
  */
 const Add_Patient_Exemption = (req, res) => {
-    const { hashed_id, motivo, data_inicio, data_fim } = req.body;
-    pool.query("SELECT * FROM adicionar_isencao($1, $2, $3, $4)", [hashed_id, motivo, data_inicio, data_fim], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(201).json({ "status": true, "message": "Isenção adicionada ao Utente com Sucesso!" });
-    });
-}
+  const { hashed_id, motivo, data_inicio, data_fim } = req.body;
+  pool.query("SELECT * FROM adicionar_isencao($1, $2, $3, $4)", [hashed_id, motivo, data_inicio, data_fim], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(201).json({ status: true, message: "Isenção adicionada ao Utente com Sucesso!" });
+  });
+};
 
 /**
  * @swagger
@@ -478,16 +488,16 @@ const Add_Patient_Exemption = (req, res) => {
  *              description: Erro
  */
 const Get_Patient_Exemptions = (req, res) => {
-    const hashed_id = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_isencoes($1)", [hashed_id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
+  const hashed_id = req.params.hashed_id;
+  pool.query("SELECT * FROM ver_isencoes($1)", [hashed_id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
 
-        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
-    });
-}
+    res.status(200).json({ recordsFiltered: results.rows.length, recordsTotal: results.rows.length, data: results.rows });
+  });
+};
 
 /**
  * @swagger
@@ -513,16 +523,16 @@ const Get_Patient_Exemptions = (req, res) => {
  *              description: Erro
  */
 const Delete_Patient_Exemption = (req, res) => {
-    const id = req.params.id;
-    pool.query("SELECT * FROM remover_isencao($1)", [id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
+  const id = req.params.id;
+  pool.query("SELECT * FROM remover_isencao($1)", [id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
 
-        res.status(200).json(results.rows);
-    });
-}
+    res.status(200).json(results.rows);
+  });
+};
 
 /**
  * @swagger
@@ -575,15 +585,15 @@ const Delete_Patient_Exemption = (req, res) => {
  *              description: Erro
  */
 const Add_Patient_Contribution = (req, res) => {
-    const { hashed_id, motivo, data_inicio, data_fim } = req.body;
-    pool.query("SELECT * FROM adicionar_comparticipacao_medicamentos($1, $2, $3, $4)", [hashed_id, motivo, data_inicio, data_fim], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
-        res.status(201).json({ "status": true, "message": "Comparticipação Medicação adicionada ao Utente com Sucesso!" });
-    });
-}
+  const { hashed_id, motivo, data_inicio, data_fim } = req.body;
+  pool.query("SELECT * FROM adicionar_comparticipacao_medicamentos($1, $2, $3, $4)", [hashed_id, motivo, data_inicio, data_fim], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
+    res.status(201).json({ status: true, message: "Comparticipação Medicação adicionada ao Utente com Sucesso!" });
+  });
+};
 
 /**
  * @swagger
@@ -609,16 +619,16 @@ const Add_Patient_Contribution = (req, res) => {
  *              description: Erro
  */
 const Get_Patient_Contributions = (req, res) => {
-    const hashed_id = req.params.hashed_id;
-    pool.query("SELECT * FROM ver_comparticipacoes_medicamentos($1)", [hashed_id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
+  const hashed_id = req.params.hashed_id;
+  pool.query("SELECT * FROM ver_comparticipacoes_medicamentos($1)", [hashed_id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
 
-        res.status(200).json({ 'recordsFiltered': results.rows.length, 'recordsTotal': results.rows.length, 'data': results.rows });
-    });
-}
+    res.status(200).json({ recordsFiltered: results.rows.length, recordsTotal: results.rows.length, data: results.rows });
+  });
+};
 
 /**
  * @swagger
@@ -644,32 +654,33 @@ const Get_Patient_Contributions = (req, res) => {
  *              description: Erro
  */
 const Delete_Patient_Contribution = (req, res) => {
-    const id = req.params.id;
-    pool.query("SELECT * FROM remover_comparticipacao_medicamentos($1)", [id], (error, results) => {
-        if (error) {
-            res.status(400).json({ error: error.message });
-            return;
-        }
+  const id = req.params.id;
+  pool.query("SELECT * FROM remover_comparticipacao_medicamentos($1)", [id], (error, results) => {
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
 
-        res.status(200).json(results.rows);
-    });
-}
+    res.status(200).json(results.rows);
+  });
+};
 
 module.exports = {
-    Get_Patients_Table,
-    Get_Patient_Info,
-    Marry_Patient,
-    Divorce_Patient,
-    Add_Patient_Emergency_Contact,
-    Get_Patient_Emergency_Contacts,
-    Delete_Patient_Emergency_Contact,
-    Add_Patient_Special_Medication,
-    Get_Patient_Special_Medication,
-    Delete_Patient_Special_Medication,
-    Add_Patient_Exemption,
-    Get_Patient_Exemptions,
-    Delete_Patient_Exemption,
-    Add_Patient_Contribution,
-    Get_Patient_Contributions,
-    Delete_Patient_Contribution
+  Get_Patients_Table,
+  Get_Patient_Info,
+  Get_PatientID,
+  Marry_Patient,
+  Divorce_Patient,
+  Add_Patient_Emergency_Contact,
+  Get_Patient_Emergency_Contacts,
+  Delete_Patient_Emergency_Contact,
+  Add_Patient_Special_Medication,
+  Get_Patient_Special_Medication,
+  Delete_Patient_Special_Medication,
+  Add_Patient_Exemption,
+  Get_Patient_Exemptions,
+  Delete_Patient_Exemption,
+  Add_Patient_Contribution,
+  Get_Patient_Contributions,
+  Delete_Patient_Contribution,
 };

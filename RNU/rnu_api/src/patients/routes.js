@@ -5,6 +5,8 @@ const router = Router();
 
 router.get('/table', controller.Get_Patients_Table)
 
+router.get('/num_utente/:num_utente', controller.Get_PatientID)
+
 router.get('/patient/info/:hashed_id', controller.Get_Patient_Info)
 
 router.post('/patient/marry', controller.Marry_Patient)
